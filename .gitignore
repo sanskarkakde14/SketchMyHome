@@ -2,6 +2,8 @@
 *.pot
 *.pyc
 __pycache__
+account/__pycache__
+SKM/__pycache__
 .env 
 .venv 
 env/ 
