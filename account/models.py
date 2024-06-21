@@ -38,6 +38,7 @@ class User(AbstractBaseUser):
       max_length=255,
       unique=True,
   )
+
   name = models.CharField(max_length=200)
   tc = models.BooleanField()
   is_active = models.BooleanField(default=True)

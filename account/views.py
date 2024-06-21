@@ -5,7 +5,13 @@ from account.serializers import SendPasswordResetEmailSerializer, UserChangePass
 from django.contrib.auth import authenticate
 from account.renderers import UserRenderer
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.urls import reverse
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from django.contrib.auth.tokens import default_token_generator
 from rest_framework.permissions import IsAuthenticated
+from .models import User
+from .utils import Util
 
 # Generate Token Manually
 def get_tokens_for_user(user):
@@ -58,6 +64,23 @@ class SendPasswordResetEmailView(APIView):
   def post(self, request, format=None):
     serializer = SendPasswordResetEmailSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
+    email = serializer.validated_data['email']
+    user = User.objects.filter(email=email).first()
+    if user:
+      # Generate password reset token
+      uid = urlsafe_base64_encode(force_bytes(user.pk))
+      token = default_token_generator.make_token(user)
+      reset_link = request.build_absolute_uri(
+          reverse('password_reset_confirm', kwargs={'uidb64': uid, 'token': token})
+      )
+      # Prepare email data
+      email_data = {
+          'subject': 'Password Reset Request',
+          'body': f'Hi {user.username},\n\nUse the link below to reset your password:\n{reset_link}\n\nIf you did not make this request, simply ignore this email.',
+          'to_email': email,
+      }
+      # Send email
+      Util.send_email(email_data)
     return Response({'msg':'Password Reset link send. Please check your Email'}, status=status.HTTP_200_OK)
 
 class UserPasswordResetView(APIView):
@@ -73,3 +96,4 @@ class UserPasswordResetView(APIView):
 
 
   
+

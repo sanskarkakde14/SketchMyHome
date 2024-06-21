@@ -1,5 +1,3 @@
-
-
 from pathlib import Path
 from datetime import timedelta
 import os
@@ -8,15 +6,13 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-3o_2hf+=(704+4f=5cqg!3tk%cn-cdd*26yvdovg4hsy)7&c&0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -134,6 +130,15 @@ SIMPLE_JWT = {
 PASSWORD_RESET_TIMEOUT=900  
 
 
+# Email configuration
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'your_email_host'  # e.g., 'smtp.gmail.com'
+# EMAIL_PORT = 587  # or 465 for SSL
+# EMAIL_USE_TLS = True  # or EMAIL_USE_SSL = True for port 465
+# EMAIL_HOST_USER = 'your_email@example.com'
+# EMAIL_HOST_PASSWORD = 'your_email_password'
+# EMAIL_FROM = 'your_default_from_email@example.com'
 
 
 

@@ -11,3 +11,9 @@ class Util:
       to=[data['to_email']]
     )
     email.send()
+
+
+# Optionally, you can attach files
+# email.attach_file('/path/to/attachment.pdf')
+
+
