@@ -1,5 +1,5 @@
 from django.urls import path
-from account.views import SendPasswordResetEmailView, UserChangePasswordView, UserLoginView, UserProfileView, UserRegistrationView, UserPasswordResetView
+from account.views import SendPasswordResetEmailView, UserChangePasswordView, UserLoginView, UserProfileView, UserRegistrationView, UserPasswordResetView,UserLogoutView
 from rest_framework_simplejwt import views as jwt_views
 
 urlpatterns = [
@@ -10,7 +10,8 @@ urlpatterns = [
     path('send-reset-password-email/', SendPasswordResetEmailView.as_view(), name='send-reset-password-email'),
     path('reset-password/<uid>/<token>/', UserPasswordResetView.as_view(), name='reset-password'),
     path('token/', jwt_views.TokenObtainPairView.as_view(), name ='token_obtain_pair'),
-    path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name ='token_refresh')
+    path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name ='token_refresh'),
+    path('logout/', UserLogoutView.as_view(), name='logout'),  # New endpoint for logout
 ]
 
 
