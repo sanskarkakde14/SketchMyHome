@@ -5,3 +5,10 @@ djangorestframework==3.15.1
 djangorestframework-simplejwt==5.3.1
 PyJWT==2.8.0
 sqlparse==0.5.0
+ezdxf
+numpy
+pandas
+python-math
+scikit-learn
+aspose-cad
+

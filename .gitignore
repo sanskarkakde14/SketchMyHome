@@ -4,6 +4,7 @@
 __pycache__
 account/__pycache__
 SKM/__pycache__
+dummy/__pycache__
 .env 
 .venv 
 env/ 

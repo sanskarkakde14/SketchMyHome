@@ -24,7 +24,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'account'
+    'account',
+    'dummy'
 ]
 
 MIDDLEWARE = [
@@ -139,7 +140,6 @@ PASSWORD_RESET_TIMEOUT=900
 # EMAIL_HOST_USER = 'your_email@example.com'
 # EMAIL_HOST_PASSWORD = 'your_email_password'
 # EMAIL_FROM = 'your_default_from_email@example.com'
-
 
 
 
