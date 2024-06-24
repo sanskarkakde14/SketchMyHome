@@ -7,12 +7,13 @@ from subprocess import run, PIPE
 from django.http import FileResponse, HttpResponse
 from pathlib import Path
 import json,os
+from rest_framework.permissions import IsAuthenticated
 from .serializers import *
 from urllib.parse import urljoin
 
 class CreateProjectView(CreateAPIView):
     serializer_class = ProjectSerializer
-
+    permission_classes = [IsAuthenticated]
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
@@ -52,6 +53,7 @@ class CreateProjectView(CreateAPIView):
 
 #Damn
 class PDFListView(APIView):
+    permission_classes = [IsAuthenticated]
     def get(self, request):
         pdf_folder = os.path.join(settings.BASE_DIR, 'dummy', 'pdf')
         pdf_files = [f for f in os.listdir(pdf_folder) if f.endswith('.pdf')]
@@ -69,6 +71,7 @@ class PDFListView(APIView):
         return Response(serializer.data)
 
 class PDFServeView(APIView):
+    permission_classes = [IsAuthenticated]
     def get(self, request, filename):
         pdf_folder = os.path.join(settings.BASE_DIR, 'dummy', 'pdf')
         file_path = os.path.join(pdf_folder, filename)
@@ -97,4 +100,3 @@ class PDFServeView(APIView):
 
 
 
-        
