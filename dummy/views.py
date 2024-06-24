@@ -50,7 +50,7 @@ class CreateProjectView(CreateAPIView):
     
 
 
-    #Damn
+#Damn
 class PDFListView(APIView):
     def get(self, request):
         pdf_folder = os.path.join(settings.BASE_DIR, 'dummy', 'pdf')
@@ -80,3 +80,21 @@ class PDFServeView(APIView):
                 return response
         else:
             return Response({'error': 'File not found'}, status=status.HTTP_404_NOT_FOUND)
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
