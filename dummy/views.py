@@ -1,11 +1,15 @@
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.generics import CreateAPIView
+from rest_framework.views import APIView
 from django.conf import settings
 from subprocess import run, PIPE
+from django.http import FileResponse, HttpResponse
 from pathlib import Path
-import json
+import json,os
 from .serializers import *
+from urllib.parse import urljoin
+
 class CreateProjectView(CreateAPIView):
     serializer_class = ProjectSerializer
 
@@ -44,3 +48,35 @@ class CreateProjectView(CreateAPIView):
 
 
     
+
+
+    #Damn
+class PDFListView(APIView):
+    def get(self, request):
+        pdf_folder = os.path.join(settings.BASE_DIR, 'dummy', 'pdf')
+        pdf_files = [f for f in os.listdir(pdf_folder) if f.endswith('.pdf')]
+        
+        base_url = request.build_absolute_uri('/')[:-1]  # Remove trailing slash
+        pdf_list = [
+            {
+                'name': pdf_file,
+                'url': urljoin(base_url, f'/api/pdf/{pdf_file}')
+            }
+            for pdf_file in pdf_files
+        ]
+        
+        serializer = PDFSerializer(pdf_list, many=True)
+        return Response(serializer.data)
+
+class PDFServeView(APIView):
+    def get(self, request, filename):
+        pdf_folder = os.path.join(settings.BASE_DIR, 'dummy', 'pdf')
+        file_path = os.path.join(pdf_folder, filename)
+        
+        if os.path.exists(file_path):
+            with open(file_path, 'rb') as pdf_file:
+                response = HttpResponse(pdf_file.read(), content_type='application/pdf')
+                response['Content-Disposition'] = f'inline; filename="{filename}"'
+                return response
+        else:
+            return Response({'error': 'File not found'}, status=status.HTTP_404_NOT_FOUND)

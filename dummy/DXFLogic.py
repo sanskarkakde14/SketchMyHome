@@ -112,19 +112,6 @@ def metadata_vectorizer(layer_info, sample, file_name):
     df_width.loc[file_name] = layer_info['width'].to_list()
     
     
-    
-    #dim_column = (layer_info['Layer'] + '_dim').to_list()
-    #df_dim = pd.DataFrame(columns = dim_column)
-    #df_width.reindex([file_name])
-
-    #lst = []
-    #for idx, val in layer_info.iterrows():
-        #dim = f"{val['length'] : .2f} *{val['width'] : .2f} feet"
-        #lst.append(dim)
-    
-    #df_dim.loc[file_name] = lst
-    
-    
     room_no_cols = ['No_of_Bedrooms', 'No_of_Bathrooms', 'No_of_Livingrooms', 'No_of_Kitchens', 'No_of_Dinings',
                    'No_of_Kitchen&Dining', 'No_of_Storerooms', 'No_of_Garden', 'No_of_Parking','No_of_Poojarooms','No_of_WashArea']
     df_room = pd.DataFrame(columns = room_no_cols)
@@ -307,7 +294,6 @@ def Similarity_fuc(new_point, MetaData):
 def plot_dxf(filename):
     doc = ezdxf.readfile(filename)
     msp = doc.modelspace()
-
     fig, ax = plt.subplots(figsize=(12, 9))
     for entity in msp:
         if entity.dxftype() == 'LINE':
@@ -359,14 +345,8 @@ def plot_dxf(filename):
     # Save the plot as PDF
     with PdfPages(pdf_filename) as pdf:
         pdf.savefig(fig, bbox_inches='tight')
-    
     plt.close(fig)
-    
     return pdf_filename
-
-
-
-
 
 
 filename = [
@@ -397,8 +377,6 @@ filename = [
 Data = Data_creation(filename)
 nearest_neighbors, Differences = Similarity_fuc(new_point, Data)
 sorted_point = nearest_neighbors.index.tolist()  # Convert index to list of file names
-# pdf_folder = pdf_generator(sorted_point)
-# print(f"PDFs generated successfully in {pdf_folder}")
 
 
 pdf_files = []
@@ -407,3 +385,5 @@ for dxf_file in sorted_point:
     pdf_files.append(pdf_file)
 
 print(f"PDFs generated successfully: {pdf_files}")
+
+
