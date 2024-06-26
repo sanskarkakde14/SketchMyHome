@@ -241,17 +241,7 @@ def Similarity_fuc(new_point, MetaData):
                                       columns = new_data_cont.columns + '_S', 
                                       index = new_data_cont.index)
     
-    # One-hot encode categorical data
-    # encoder = OneHotEncoder(drop='first', handle_unknown='ignore')  
-    # data_cat_OHE = encoder.fit_transform(data_cat) 
-    # new_data_cat_OHE = encoder.transform(new_data_cat) 
     
-    # data_cat_OHE_DF = pd.DataFrame(data_cat_OHE, 
-    #                                columns = encoder.get_feature_names_out(data_cat.columns), 
-    #                                index = data_cat.index)
-    # new_data_cat_OHE_DF = pd.DataFrame(new_data_cat_OHE, 
-    #                                    columns = encoder.get_feature_names_out(new_data_cat.columns), 
-    #                                    index = new_data_cat.index)
     
     # Combine continuous and categorical data
     data_comb = pd.concat([data_cont_S_DF, data_cat], axis=1)
